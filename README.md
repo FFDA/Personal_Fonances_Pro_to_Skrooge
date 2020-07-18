@@ -1,2 +1,24 @@
-# Personal_Fonances_Pro_to_Skrooge
+# Personal Fonances Pro to Skrooge
 This script (tries) to convert exported Personal Finances Pro database (csv) to something one can use with Skrooge
+
+I used Personal Finances Pro (now Alzex Personal Finance) for few years. However, had to change to different personal finance program (Skrooge) when I change my OS to Linux.
+Personal Finances Pro exported database is not compatible with Skrooge, so I wrote this script in python3 to make it so. It has shortcomings, but it did the job for me. I'm putting it here for anyone else that is in the same situation I was few years back.
+
+# Some remarks before the start
+
+* Always make bakcups of original. This script will create file with appended fixed and will not write in to original file. Still ALWAYS MAKE/HAVE BACKUPS.
+It might be that Skrooge might have accepted different type of exported database. Personal Finances Pro offers few variants, but .csv look the most complete so that’s why I used it.
+* Anyone who used Skrooge for some time have noticed that Skrooge has default/base currency. The rest currencies are counted using it. While I think it's not always true. if you look in the Skrooge database. Maybe something was change doting the development of the program. But this script works using logic that it is true. But it is the reason why end result might end up not completely right.
+* I wrote this script after couple of years of using Skrooge. So my old database was just sitting there and I did not carry any categories from the old the new program. Started new categories or used the ones that scrooge provided.
+* Comments will be transferred to new database. If you wrote comments and descriptions in Personal Finances Pro they will be merged together. While script will try to sanitize comments and remove quote marks and semicolons. I suggest you to open documents and check for them with search in LibreOffice Calc just in case. Let's say I had some issues, that I was to lazy to fix.
+* You have to make sure that comments do not have <enter> (new line) in them. This will break the script.
+* If you will be opening any of CSV file in LibreOffice Calc do not choose “Format Quoted field as text” in “Other Options”.
+# How to
+
+* You will have to export database from Personal Finances Pro to (csv) file. Use date formatting YYYY-MM-DD and semicolon (;) as separator. Make su that all account in Personal Finances Pro has unique name. Because if you have multiple currencies and under them there are "cash" categories in exported database they look all the same: "cash". Rename these type of account "Cash (USD)", "Cash (EUR)" or make the have unique names in some other way.
+* Make a new database in Skrooge with all the accounts and currencies. Export that to file (csv) without any transactions. Open that file and make sure that id, and transaction starts from 1 and increases by +1 every new account. idgroup all should be 0. If in Personal Finances Pro you created an account with "initial balance" you will have to do the same in Skrooge account before exporting it.  Change the extension of the file to .csv
+* Export all accounts from Personal Finances Pro databsae using this script. (1st option "Get Categories"). Remove all accounts that have ":" in them. This is the step why you needed to make sure that all accounts had unique names. Next to Personal Finances Pro account name write (copy) "bank" and "account" names that you wrote in new Skrooge database. EX.: "Cash (EUR)", "wallet", "Cash (EUR)". In the fourth cell write exchange course of the currency to base currency. If you have only one currency write 1 in it. For example exchange course for AUD to EUR would be something like 0.6877. Rename this file to "Accounts.ods". This file name is hardcoded to the script. It will not work if you name it something else.
+* Use first option of the script to export all categories from the Personal Finances Pro. Open the file and in the cell next to the old category name write the category that it will be change to for Skrooge. If you do not want to change anythin and leave old categories. Just copy text to the next column. If there is an empty line - leave it. It means you had some transactions without categories. You can write to the third cell of the line anything you want to append to comment of the transaction that has that categories.
+If you want to change transactions category by comment that transaction has in Personal Finances Pro database. Create txt file. Write comment separated by semicolon. One per line. and rename it to "Comment_Category.ods". This thing might be buggy, but is not mandatory. You may skip this step and not create a file at all.
+* Run the second option "Fix a database". Choose files and that should be all.
+* If you been using Skrooge for a while you can use option 3 after. Just export database from Skrooge. Make use the Skrooge database starts from where Personal Finances Pro ended. Otherwise duplicates will cause new database to show wrong amounts.
